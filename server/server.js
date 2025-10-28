@@ -1,78 +1,64 @@
-// server.js - Main server file for the MERN blog application
-
-// Import required modules
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
 const dotenv = require('dotenv');
-const path = require('path');
-
-// Import routes
+const cors = require('cors');
+const connectDB = require('./config/db');
 const postRoutes = require('./routes/posts');
 const categoryRoutes = require('./routes/categories');
-const authRoutes = require('./routes/auth');
+const errorHandler = require('./middleware/errorHandler');
+const notFound = require('./middleware/notFound');
 
-// Load environment variables
+
 dotenv.config();
+connectDB();
 
-// Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Log requests in development mode
-if (process.env.NODE_ENV === 'development') {
-  app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-  });
-}
-
-// API routes
+// Routes
 app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
-app.use('/api/auth', authRoutes);
 
-// Root route
-app.get('/', (req, res) => {
-  res.send('MERN Blog API is running');
-});
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
+
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.statusCode || 500).json({
-    success: false,
-    error: err.message || 'Server Error',
-  });
+app.use(errorHandler);
+
+
+const Post = require('./models/Post');
+
+const seedPostsIfEmpty = async () => {
+  const count = await Post.countDocuments();
+  if (count === 0) {
+    await Post.insertMany([
+      {
+        title: "Morning Skincare Routine for Glowing Skin",
+        content: "Start your day with a gentle cleanser, followed by a hydrating toner and vitamin C serum. Always apply sunscreen before leaving the house to protect your skin from UV damage.",
+        author: "E w"
+      },
+      {
+        title: "Top 5 Lipstick Shades for Every Occasion",
+        content: "From nude pinks for daytime to bold reds for nights out, here are five must-have lipstick shades that suit all skin tones.",
+        author: "J Krown"
+      },
+      {
+        title: "Self-Care Sundays: Relax and Recharge",
+        content: "Sundays are perfect for taking care of yourself. Try a bubble bath, light a candle, and spend a few minutes journaling about what you’re grateful for this week.",
+        author: "E w"
+      },
+    ]);
+    console.log("✅ Demo posts seeded!");
+  }
+};
+
+
+const PORT = process.env.PORT || 5000;
+
+// 🟢 Connect to DB first, then seed, then start server
+connectDB().then(async () => {
+  await seedPostsIfEmpty();
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 });
-
-// Connect to MongoDB and start server
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB', err);
-    process.exit(1);
-  });
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Promise Rejection:', err);
-  // Close server & exit process
-  process.exit(1);
-});
-
-module.exports = app; 

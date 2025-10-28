@@ -1,78 +1,99 @@
-# MERN Stack Integration Assignment
+# GlowLife Blog — MERN Stack Integration Assignment
 
-This assignment focuses on building a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application that demonstrates seamless integration between front-end and back-end components.
+##  Project Overview
+GlowLife is a full-stack **MERN (MongoDB, Express.js, React.js, Node.js)** blog application that demonstrates seamless front-end and back-end integration.  
+Users can view, create, and manage blog posts while interacting with a dynamic and visually appealing interface built using React and Tailwind CSS.
 
-## Assignment Overview
+---
 
-You will build a blog application with the following features:
-1. RESTful API with Express.js and MongoDB
-2. React front-end with component architecture
-3. Full CRUD functionality for blog posts
-4. User authentication and authorization
-5. Advanced features like image uploads and comments
+##  Features
+- Full CRUD operations for blog posts (Create, Read, Update, Delete)
+- RESTful API using Express and Mongoose
+- MongoDB database integration
+- React front-end built with Vite
+- Context API for state management
+- Form validation and error handling
+- Responsive UI with Tailwind CSS
+- Dynamic Navbar and Footer
+- Category management
+- Sample data seeding for initial posts
+
+---
 
 ## Project Structure
-
 ```
-mern-blog/
+mern-stack-integration-uncwambui/
 ├── client/                 # React front-end
-│   ├── public/             # Static files
-│   ├── src/                # React source code
-│   │   ├── components/     # Reusable components
-│   │   ├── pages/          # Page components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── services/       # API services
-│   │   ├── context/        # React context providers
-│   │   └── App.jsx         # Main application component
-│   └── package.json        # Client dependencies
-├── server/                 # Express.js back-end
-│   ├── config/             # Configuration files
-│   ├── controllers/        # Route controllers
-│   ├── models/             # Mongoose models
-│   ├── routes/             # API routes
-│   ├── middleware/         # Custom middleware
-│   ├── utils/              # Utility functions
-│   ├── server.js           # Main server file
-│   └── package.json        # Server dependencies
-└── README.md               # Project documentation
+│   ├── src/
+│   │   ├── components/     # Reusable UI components (Navbar, Footer, etc.)
+│   │   ├── pages/          # Pages (Home, PostList, PostView, PostForm, About)
+│   │   ├── context/        # React Context for global state (PostContext)
+│   │   └── App.jsx         # Main React App
+│   ├── vite.config.js
+│   └── package.json
+│
+├── server/                 # Express back-end
+│   ├── config/db.js        # MongoDB connection setup
+│   ├── models/             # Mongoose schemas (Post, Category)
+│   ├── routes/             # API routes for posts & categories
+│   ├── controllers/        # Logic for handling requests
+│   ├── middleware/         # Error handling & validation
+│   ├── server.js           # Entry point for backend server
+│   └── package.json
+│
+├── .env.example            # Example environment variables
+├── README.md               # Documentation file
+└── SETUP.md                # Step-by-step setup guide
 ```
 
-## Getting Started
+---
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week4-Assignment.md` file
-4. Complete the tasks outlined in the assignment
+## ⚙️ Technologies Used
+**Front-End:** React, Vite, Tailwind CSS, React Router, Framer Motion  
+**Back-End:** Node.js, Express.js, Mongoose  
+**Database:** MongoDB  
+**Other Tools:** dotenv, nodemon, CORS
 
-## Files Included
+---
 
-- `Week4-Assignment.md`: Detailed assignment instructions
-- Starter code for both client and server:
-  - Basic project structure
-  - Configuration files
-  - Sample models and components
+## 📡 API Endpoints
+### Posts
+| Method | Endpoint | Description |
+|---------|-----------|-------------|
+| GET | `/api/posts` | Get all blog posts |
+| GET | `/api/posts/:id` | Get a single post |
+| POST | `/api/posts` | Create a new post |
+| PUT | `/api/posts/:id` | Update a post |
+| DELETE | `/api/posts/:id` | Delete a post |
 
-## Requirements
+### Categories
+| Method | Endpoint | Description |
+|---------|-----------|-------------|
+| GET | `/api/categories` | Get all categories |
+| POST | `/api/categories` | Create a new category |
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- npm or yarn
-- Git
+---
 
-## Submission
+## Advanced Features (Optional)
+- User authentication (JWT)
+- Image upload (Cloudinary or Multer)
+- Pagination and filtering
+- Comments section
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+---
 
-1. Complete both the client and server portions of the application
-2. Implement all required API endpoints
-3. Create the necessary React components and hooks
-4. Document your API and setup process in the README.md
-5. Include screenshots of your working application
+## Screenshots
+_Add screenshots of your app showing Home, Blog List, and Post View._
 
-## Resources
+---
 
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Express.js Documentation](https://expressjs.com/)
-- [React Documentation](https://react.dev/)
-- [Node.js Documentation](https://nodejs.org/en/docs/)
-- [Mongoose Documentation](https://mongoosejs.com/docs/) 
+## License
+This project is part of an academic assignment.
+
+
+##  Resources
+- MongoDB Documentation
+- Express.js Documentation
+- React Documentation
+- Node.js Documentation
+- Mongoose Documentation
